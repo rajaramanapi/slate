@@ -1,0 +1,6308 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "KanTime EVV Open API",
+    "version": "v1",
+    "termsOfService": "https://careconnectmobile.com/terms.html",
+    "x-logo": {
+      "url": "https://github.com/rajaramanapi/rajaramanapi/blob/main/logo%20new%20hha%20-%20Copy.jpg?raw=true"
+    },
+    "description": "# Overview\n**Open API for integrating third party systems with the KanTime**\n\nThis is a data exchange API used for KanTime Visit Adjudication. It is used to render information regarding authorizations and schedule details for Clients and also helps to reduce fradulent data and enhance compliance.\n\nThe API has the main entities of Caregivers, Rates, Authorizations and Visits.\n- **Caregivers** (sometimes called Attendants) is the individual who performs the service.\n- **Rates** defines the values used to payroll the visits.\n- **Authorization** defines the eligibilty of Clients undertaing the care services.\n- **Visits** are appointments planned for Clients to provide care.\n\n# Authentication \nThird party system shall send **agency specific API key** in `X-CC-API-Key` HTTP header field.\n\n\n      "
+  },
+  "servers": [
+    {
+      "url": "/api/kantimeevv/openapi/v1"
+    }
+  ],
+  "paths": {
+    "/members/{ktMemberId}": {
+      "get": {
+        "tags": [
+          "Members"
+        ],
+        "parameters": [
+          {
+            "name": "ktMemberId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Third party system shall send agency specific API key in this field."
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            },
+            "description": "This used to identify the vendor and this is optional."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberGetDtoApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberGetDtoApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberGetDtoApiResponse"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "response_payload": {
+                      "type": "object",
+                      "properties": {
+                        "kt_member_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "vendor_member_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "member_evv_id": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "first_name": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "last_name": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "middle_initial": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "medicaid_no": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "medicare_no": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "ssn": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "status": {
+                          "type": "string",
+                          "minLength": 1,
+                          "description": "Used to define the current status"
+                        },
+                        "dob": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "soc_date": {},
+                        "gender": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "posess_fob_device": {
+                          "type": "boolean"
+                        },
+                        "phone": {
+                          "type": "object",
+                          "properties": {
+                            "home_phone": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "mobile": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "evv_phone1": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "evv_phone2": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "home_phone",
+                            "mobile",
+                            "evv_phone1",
+                            "evv_phone2"
+                          ]
+                        },
+                        "address": {
+                          "type": "object",
+                          "properties": {
+                            "address1": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "address2": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "city": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "state": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "zip": {
+                              "type": "string",
+                              "minLength": 1
+                            },
+                            "geo_location": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "address1",
+                            "address2",
+                            "city",
+                            "state",
+                            "zip",
+                            "geo_location"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "kt_member_id",
+                        "vendor_member_id",
+                        "member_evv_id",
+                        "first_name",
+                        "last_name",
+                        "middle_initial",
+                        "medicaid_no",
+                        "medicare_no",
+                        "ssn",
+                        "status",
+                        "dob",
+                        "gender",
+                        "posess_fob_device",
+                        "phone",
+                        "address"
+                      ]
+                    },
+                    "is_valid": {
+                      "type": "boolean"
+                    },
+                    "kt_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "vendor_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status_code": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "response_payload",
+                    "is_valid",
+                    "kt_transaction_id",
+                    "vendor_transaction_id",
+                    "status_code"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "response_payload": {
+                        "kt_member_id": "61404f54a202ac148957746d",
+                        "vendor_member_id": "string",
+                        "member_evv_id": "string",
+                        "first_name": "string",
+                        "last_name": "string",
+                        "middle_initial": "string",
+                        "medicaid_no": "string",
+                        "medicare_no": "string",
+                        "ssn": "string",
+                        "status": "Active",
+                        "dob": "2021-09-14T00:00:00Z",
+                        "soc_date": null,
+                        "gender": "string",
+                        "posess_fob_device": true,
+                        "phone": {
+                          "home_phone": "string",
+                          "mobile": "1234567890",
+                          "evv_phone1": "string",
+                          "evv_phone2": "string"
+                        },
+                        "address": {
+                          "address1": "string",
+                          "address2": "string",
+                          "city": "string",
+                          "state": "NY",
+                          "zip": "string",
+                          "geo_location": "string"
+                        }
+                      },
+                      "is_valid": true,
+                      "kt_transaction_id": "6140507ca202ac148957746e",
+                      "vendor_transaction_id": "61404f54a202ac148957746c",
+                      "status_code": 200
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "error_messages": {
+                      "type": "array",
+                      "items": {
+                        "required": [],
+                        "properties": {}
+                      }
+                    },
+                    "is_valid": {
+                      "type": "boolean"
+                    },
+                    "kt_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "vendor_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status_code": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "error_messages",
+                    "is_valid",
+                    "kt_transaction_id",
+                    "vendor_transaction_id",
+                    "status_code"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "error_messages": [
+                        "Client uid is invalid, expecting a valid value."
+                      ],
+                      "is_valid": false,
+                      "kt_transaction_id": "61405c05a202ac148957747b",
+                      "vendor_transaction_id": "61404f54a202ac148957746c",
+                      "status_code": 400
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "List Members by ID",
+        "description": "This interaction is used to return employees general information by filtering using their identity within a given home company.",
+        "operationId": "GET"
+      },
+      "put": {
+        "tags": [
+          "Members"
+        ],
+        "parameters": [
+          {
+            "name": "ktMemberId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                  "response_payload": {
+                    "type": "object",
+                    "properties": {
+                      "kt_member_id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "vendor_member_id": {
+                        "type": "string",
+                        "minLength": 1
+                      },
+                      "is_valid": {
+                        "type": "boolean"
+                      },
+                      "status_code": {
+                        "type": "number"
+                      },
+                      "error_messages": {}
+                    },
+                    "required": [
+                      "kt_member_id",
+                      "vendor_member_id",
+                      "is_valid",
+                      "status_code"
+                    ]
+                  },
+                  "is_valid": {
+                    "type": "boolean"
+                  },
+                  "kt_transaction_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "vendor_transaction_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "status_code": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "response_payload",
+                  "is_valid",
+                  "kt_transaction_id",
+                  "vendor_transaction_id",
+                  "status_code"
+                ],
+                "x-examples": {
+                  "example-1": {
+                    "response_payload": {
+                      "kt_member_id": "61404f54a202ac148957746d",
+                      "vendor_member_id": "string",
+                      "is_valid": true,
+                      "status_code": 0,
+                      "error_messages": null
+                    },
+                    "is_valid": true,
+                    "kt_transaction_id": "614051b8a202ac1489577470",
+                    "vendor_transaction_id": "61404f54a202ac148957746c",
+                    "status_code": 200
+                  }
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberEditDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberEditDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberResponseDtoApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberResponseDtoApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberResponseDtoApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "error_messages": {
+                      "type": "array",
+                      "items": {
+                        "required": [],
+                        "properties": {}
+                      }
+                    },
+                    "is_valid": {
+                      "type": "boolean"
+                    },
+                    "kt_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "vendor_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status_code": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "error_messages",
+                    "is_valid",
+                    "kt_transaction_id",
+                    "vendor_transaction_id",
+                    "status_code"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "error_messages": [
+                        "Client uid is invalid, expecting a valid value."
+                      ],
+                      "is_valid": false,
+                      "kt_transaction_id": "614052f3a202ac1489577477",
+                      "vendor_transaction_id": "61404f54a202ac148957746c",
+                      "status_code": 400
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update Members by ID"
+      },
+      "delete": {
+        "tags": [
+          "Members"
+        ],
+        "parameters": [
+          {
+            "name": "ktMemberId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "is_valid": {
+                      "type": "boolean"
+                    },
+                    "kt_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "vendor_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status_code": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "is_valid",
+                    "kt_transaction_id",
+                    "vendor_transaction_id",
+                    "status_code"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "is_valid": true,
+                      "kt_transaction_id": "6140521aa202ac1489577471",
+                      "vendor_transaction_id": "61404f54a202ac148957746c",
+                      "status_code": 200
+                    }
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberResponseDtoApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberResponseDtoApiResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "error_messages": {
+                      "type": "array",
+                      "items": {
+                        "required": [],
+                        "properties": {}
+                      }
+                    },
+                    "is_valid": {
+                      "type": "boolean"
+                    },
+                    "kt_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "vendor_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status_code": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "error_messages",
+                    "is_valid",
+                    "kt_transaction_id",
+                    "vendor_transaction_id",
+                    "status_code"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "error_messages": [
+                        "Client uid is invalid, expecting a valid value."
+                      ],
+                      "is_valid": false,
+                      "kt_transaction_id": "6140526aa202ac1489577473",
+                      "vendor_transaction_id": "61404f54a202",
+                      "status_code": 400
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Remove membersby their identity number.",
+        "summary": "Delete Members by ID"
+      }
+    },
+    "/members": {
+      "post": {
+        "tags": [
+          "Members"
+        ],
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/MemberAddDto"
+                },
+                "nullable": true
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/MemberAddDto"
+                },
+                "nullable": true
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/MemberAddDto"
+                },
+                "nullable": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberResponseDtoIEnumerableApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberResponseDtoIEnumerableApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberResponseDtoIEnumerableApiResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "response_payload": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "items": {
+                        "required": [
+                          "kt_member_id",
+                          "vendor_member_id",
+                          "is_valid",
+                          "status_code"
+                        ],
+                        "properties": {
+                          "kt_member_id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "vendor_member_id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "is_valid": {
+                            "type": "boolean"
+                          },
+                          "status_code": {
+                            "type": "number"
+                          },
+                          "error_messages": {
+                            "type": "array",
+                            "items": {
+                              "required": [],
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "is_valid": {
+                      "type": "boolean"
+                    },
+                    "kt_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "vendor_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status_code": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "response_payload",
+                    "is_valid",
+                    "kt_transaction_id",
+                    "vendor_transaction_id",
+                    "status_code"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "response_payload": [
+                        {
+                          "kt_member_id": "61404f54a202ac148957746d",
+                          "vendor_member_id": "string",
+                          "is_valid": true,
+                          "status_code": 201,
+                          "error_messages": []
+                        }
+                      ],
+                      "is_valid": true,
+                      "kt_transaction_id": "61404f54a202ac148957746c",
+                      "vendor_transaction_id": "ddffg",
+                      "status_code": 201
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "response_payload": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "items": {
+                        "required": [
+                          "vendor_member_id",
+                          "is_valid",
+                          "status_code"
+                        ],
+                        "properties": {
+                          "kt_member_id": {},
+                          "vendor_member_id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "is_valid": {
+                            "type": "boolean"
+                          },
+                          "status_code": {
+                            "type": "number"
+                          },
+                          "error_messages": {
+                            "type": "array",
+                            "items": {
+                              "required": [],
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "is_valid": {
+                      "type": "boolean"
+                    },
+                    "kt_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "vendor_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status_code": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "response_payload",
+                    "is_valid",
+                    "kt_transaction_id",
+                    "vendor_transaction_id",
+                    "status_code"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "response_payload": [
+                        {
+                          "kt_member_id": null,
+                          "vendor_member_id": "string",
+                          "is_valid": false,
+                          "status_code": 400,
+                          "error_messages": [
+                            "state :-Enter Valid State",
+                            "mobile :-  Mobile number is not in valid format",
+                            "status :-  Input value is wrong, It must be in : Active/InActive"
+                          ]
+                        }
+                      ],
+                      "is_valid": false,
+                      "kt_transaction_id": "614049c6a202ac148957746b",
+                      "vendor_transaction_id": "ddffg",
+                      "status_code": 400
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {
+              "server: kestrel": {
+                "schema": {},
+                "description": "kestrel"
+              }
+            }
+          }
+        },
+        "summary": "Create Members",
+        "description": "**Implementation** \n\nThis interaction is used to add new employee within a given home company.\n\n\n-----------------\n\n**Authorization**\n\nAPISecret key is required for new creation.\n\n-------------------\n\n**Generate Token**\n\nThe Token can be generated by running a POST request to the Token Endpoint. The request should include a Basic Authorisation header with the encoded Client ID and Secret and it should include the following parameters in the body:\n\n<html>\n<head>\n<style>\n\n\n\n</style>\n</head>\n<body>\n\n<h2>Token</h2>\n\n<table>\n  <tr>\n    <th>Parameters</th>\n    <th>Value(s)</th>\n    <th>Description</th>\n  </tr>\n  <tr>\n    <td>X-API-Key</td>\n    <td>Authorization key</td>\n    <td>Keys will be provided by Agency</td>\n  </tr>\n  <tr>\n    <td>API secret</td>\n    <td>Authorization key</td>\n    <td>Keys will be provided by Agency</td>\n  </tr>\n  <tr>\n    <td>Vendor Transaction ID</td>\n    <td>string</td>\n    <td>Defines the vendor details</td>\n  </tr>\n  </table>\n\n</body>\n</html>\n"
+      },
+      "get": {
+        "tags": [
+          "Members"
+        ],
+        "parameters": [
+          {
+            "name": "page_number",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberFilterDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberFilterDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemberFilterDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberGetDtoPagedListApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberGetDtoPagedListApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MemberGetDtoPagedListApiResponse"
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "response_payload": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "items": {
+                        "required": [
+                          "kt_member_id",
+                          "vendor_member_id",
+                          "is_valid",
+                          "status_code"
+                        ],
+                        "properties": {
+                          "kt_member_id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "vendor_member_id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "is_valid": {
+                            "type": "boolean"
+                          },
+                          "status_code": {
+                            "type": "number"
+                          },
+                          "error_messages": {
+                            "type": "array",
+                            "items": {
+                              "required": [],
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "is_valid": {
+                      "type": "boolean"
+                    },
+                    "kt_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "vendor_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status_code": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "response_payload",
+                    "is_valid",
+                    "kt_transaction_id",
+                    "vendor_transaction_id",
+                    "status_code"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "response_payload": [
+                        {
+                          "kt_member_id": "614028bdc25e79457f970994",
+                          "vendor_member_id": "string",
+                          "is_valid": true,
+                          "status_code": 201,
+                          "error_messages": []
+                        }
+                      ],
+                      "is_valid": true,
+                      "kt_transaction_id": "614028bdc25e79457f970993",
+                      "vendor_transaction_id": "abc",
+                      "status_code": 201
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        },
+        "summary": "List Members",
+        "description": "This will list all the members of the Agency."
+      }
+    },
+    "/attendants": {
+      "post": {
+        "summary": "Create Attendants",
+        "tags": [
+          "Attendants"
+        ],
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CaregiverAddDto"
+                },
+                "description": "",
+                "nullable": true
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CaregiverAddDto"
+                },
+                "description": "",
+                "nullable": true
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CaregiverAddDto"
+                },
+                "description": "",
+                "nullable": true
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaregiverApiResponseDtoIEnumerableApiBatchResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaregiverApiResponseDtoIEnumerableApiBatchResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaregiverApiResponseDtoIEnumerableApiBatchResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "response_payload": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "items": {
+                        "required": [
+                          "kt_attendant_id",
+                          "vendor_attendant_id",
+                          "is_valid",
+                          "status_code"
+                        ],
+                        "properties": {
+                          "kt_attendant_id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "vendor_attendant_id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "is_valid": {
+                            "type": "boolean"
+                          },
+                          "status_code": {
+                            "type": "number"
+                          },
+                          "error_messages": {}
+                        }
+                      }
+                    },
+                    "is_valid": {
+                      "type": "boolean"
+                    },
+                    "kt_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "vendor_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status_code": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "response_payload",
+                    "is_valid",
+                    "kt_transaction_id",
+                    "vendor_transaction_id",
+                    "status_code"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "response_payload": [
+                        {
+                          "kt_attendant_id": "6141b2d949037c51224f2214",
+                          "vendor_attendant_id": "string",
+                          "is_valid": true,
+                          "status_code": 201,
+                          "error_messages": null
+                        }
+                      ],
+                      "is_valid": true,
+                      "kt_transaction_id": "6141b2d849037c51224f2213",
+                      "vendor_transaction_id": "asdffgg",
+                      "status_code": 201
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "response_payload": {
+                      "type": "array",
+                      "uniqueItems": true,
+                      "minItems": 1,
+                      "items": {
+                        "required": [
+                          "vendor_attendant_id",
+                          "is_valid",
+                          "status_code"
+                        ],
+                        "properties": {
+                          "kt_attendant_id": {},
+                          "vendor_attendant_id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "is_valid": {
+                            "type": "boolean"
+                          },
+                          "status_code": {
+                            "type": "number"
+                          },
+                          "error_messages": {
+                            "type": "array",
+                            "items": {
+                              "required": [],
+                              "properties": {}
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "is_valid": {
+                      "type": "boolean"
+                    },
+                    "kt_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "vendor_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status_code": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "response_payload",
+                    "is_valid",
+                    "kt_transaction_id",
+                    "vendor_transaction_id",
+                    "status_code"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "response_payload": [
+                        {
+                          "kt_attendant_id": null,
+                          "vendor_attendant_id": "string",
+                          "is_valid": false,
+                          "status_code": 400,
+                          "error_messages": [
+                            "state :-Enter Valid State",
+                            "clinician_mobile :-  Mobile is not in valid format",
+                            "status :-  Input value is wrong, It must be in : Active/InActive",
+                            "official_email :- EmailId is incorrect"
+                          ]
+                        }
+                      ],
+                      "is_valid": false,
+                      "kt_transaction_id": "6141b19649037c51224f2212",
+                      "vendor_transaction_id": "asdffgg",
+                      "status_code": 400
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Attendants"
+        ],
+        "parameters": [
+          {
+            "name": "page_number",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CaregiverFilterDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CaregiverFilterDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CaregiverFilterDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaregiverGetDtoPagedListApiSuccessResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaregiverGetDtoPagedListApiSuccessResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaregiverGetDtoPagedListApiSuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "is_valid": {
+                      "type": "boolean"
+                    },
+                    "kt_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "vendor_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status_code": {
+                      "type": "number"
+                    },
+                    "error_messages": {
+                      "type": "array",
+                      "items": {
+                        "required": [],
+                        "properties": {}
+                      }
+                    }
+                  },
+                  "required": [
+                    "is_valid",
+                    "kt_transaction_id",
+                    "vendor_transaction_id",
+                    "status_code",
+                    "error_messages"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "is_valid": true,
+                      "kt_transaction_id": "string",
+                      "vendor_transaction_id": "string",
+                      "status_code": 0,
+                      "error_messages": [
+                        "string"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "List Attendants"
+      }
+    },
+    "/attendants/{ktAttendantId}": {
+      "put": {
+        "tags": [
+          "Attendants"
+        ],
+        "parameters": [
+          {
+            "name": "ktAttendantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CaregiverEditDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CaregiverEditDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CaregiverEditDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiSuccessResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiSuccessResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiSuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "error_messages": {
+                      "type": "array",
+                      "items": {
+                        "required": [],
+                        "properties": {}
+                      }
+                    },
+                    "is_valid": {
+                      "type": "boolean"
+                    },
+                    "kt_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "vendor_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status_code": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "error_messages",
+                    "is_valid",
+                    "kt_transaction_id",
+                    "vendor_transaction_id",
+                    "status_code"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "error_messages": [
+                        "state :-Enter Valid State",
+                        "clinician_mobile :-  Mobile is not in valid format",
+                        "status :-  Input value is wrong, It must be in : Active/InActive",
+                        "official_email :- EmailId is incorrect"
+                      ],
+                      "is_valid": false,
+                      "kt_transaction_id": "6141b3f449037c51224f2215",
+                      "vendor_transaction_id": "asdffgg",
+                      "status_code": 400
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update Attendants by ID"
+      },
+      "delete": {
+        "tags": [
+          "Attendants"
+        ],
+        "parameters": [
+          {
+            "name": "ktAttendantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiSuccessResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiSuccessResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiSuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "is_valid": {
+                      "type": "boolean"
+                    },
+                    "kt_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "vendor_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status_code": {
+                      "type": "number"
+                    },
+                    "error_messages": {
+                      "type": "array",
+                      "items": {
+                        "required": [],
+                        "properties": {}
+                      }
+                    }
+                  },
+                  "required": [
+                    "is_valid",
+                    "kt_transaction_id",
+                    "vendor_transaction_id",
+                    "status_code",
+                    "error_messages"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "is_valid": true,
+                      "kt_transaction_id": "string",
+                      "vendor_transaction_id": "string",
+                      "status_code": 0,
+                      "error_messages": [
+                        "string"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete Attendants by ID"
+      },
+      "get": {
+        "tags": [
+          "Attendants"
+        ],
+        "parameters": [
+          {
+            "name": "ktAttendantId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaregiverGetDtoApiSuccessResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaregiverGetDtoApiSuccessResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaregiverGetDtoApiSuccessResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "is_valid": {
+                      "type": "boolean"
+                    },
+                    "kt_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "vendor_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status_code": {
+                      "type": "number"
+                    },
+                    "error_messages": {
+                      "type": "array",
+                      "items": {
+                        "required": [],
+                        "properties": {}
+                      }
+                    }
+                  },
+                  "required": [
+                    "is_valid",
+                    "kt_transaction_id",
+                    "vendor_transaction_id",
+                    "status_code",
+                    "error_messages"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "is_valid": true,
+                      "kt_transaction_id": "string",
+                      "vendor_transaction_id": "string",
+                      "status_code": 0,
+                      "error_messages": [
+                        "string"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "List Attendants by ID"
+      }
+    },
+    "/contracts/{ktContractId}": {
+      "get": {
+        "tags": [
+          "Contracts"
+        ],
+        "parameters": [
+          {
+            "name": "ktContractId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContractResponseApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContractResponseApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContractResponseApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "description": "",
+                  "type": "object",
+                  "properties": {
+                    "error_messages": {
+                      "type": "array",
+                      "items": {
+                        "required": [],
+                        "properties": {}
+                      }
+                    },
+                    "is_valid": {
+                      "type": "boolean"
+                    },
+                    "kt_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "vendor_transaction_id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "status_code": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "error_messages",
+                    "is_valid",
+                    "kt_transaction_id",
+                    "vendor_transaction_id",
+                    "status_code"
+                  ],
+                  "x-examples": {
+                    "example-1": {
+                      "error_messages": [
+                        "Contract not found for the given Kt_Contract_Id"
+                      ],
+                      "is_valid": false,
+                      "kt_transaction_id": "6141da3e49037c51224f222d",
+                      "vendor_transaction_id": "dfffggg",
+                      "status_code": 500
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "List Contracts by ID"
+      },
+      "put": {
+        "tags": [
+          "Contracts"
+        ],
+        "parameters": [
+          {
+            "name": "ktContractId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractsDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractsDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaregiverResponseDtoApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaregiverResponseDtoApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaregiverResponseDtoApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update Contracts by ID"
+      },
+      "delete": {
+        "tags": [
+          "Contracts"
+        ],
+        "parameters": [
+          {
+            "name": "ktContractId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Delete Contracts by ID"
+      }
+    },
+    "/contracts": {
+      "get": {
+        "tags": [
+          "Contracts"
+        ],
+        "parameters": [
+          {
+            "name": "page_number",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractFilter"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractFilter"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractFilter"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContractResponsePagedListApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContractResponsePagedListApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContractResponsePagedListApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "summary": "List Contracts"
+      },
+      "post": {
+        "tags": [
+          "Contracts"
+        ],
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractListDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractListDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractListDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContractResponseIEnumerableApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContractResponseIEnumerableApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContractResponseIEnumerableApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Create Contracts"
+      },
+      "put": {
+        "tags": [
+          "Contracts"
+        ],
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractListDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractListDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContractListDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContractResponseIEnumerableApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContractResponseIEnumerableApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContractResponseIEnumerableApiResponse"
+                }
+              }
+            }
+          }
+        },
+        "summary": "Update Contracts"
+      }
+    },
+    "/rates": {
+      "post": {
+        "tags": [
+          "Rates"
+        ],
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RateListDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RateListDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RateListDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateResponseIEnumerableApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateResponseIEnumerableApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateResponseIEnumerableApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Rates"
+        ],
+        "parameters": [
+          {
+            "name": "page_number",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RateFilter"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RateFilter"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RateFilter"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateDtoPagedListApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateDtoPagedListApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateDtoPagedListApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Rates"
+        ],
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RateListDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RateListDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RateListDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateResponseIEnumerableApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateResponseIEnumerableApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateResponseIEnumerableApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rates/{kt_rates_id}": {
+      "get": {
+        "tags": [
+          "Rates"
+        ],
+        "parameters": [
+          {
+            "name": "kt_rates_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateDtoApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateDtoApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateDtoApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Rates"
+        ],
+        "parameters": [
+          {
+            "name": "kt_rates_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RatesDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RatesDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RatesDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateResponseApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateResponseApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RateResponseApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Rates"
+        ],
+        "parameters": [
+          {
+            "name": "kt_rates_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authorizations/{kt_auth_id}": {
+      "get": {
+        "tags": [
+          "Authorizations"
+        ],
+        "parameters": [
+          {
+            "name": "kt_auth_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationDtoApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationDtoApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationDtoApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Authorizations"
+        ],
+        "parameters": [
+          {
+            "name": "kt_auth_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authorizations": {
+      "put": {
+        "tags": [
+          "Authorizations"
+        ],
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationEditListDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationEditListDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationEditListDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Authorizations"
+        ],
+        "parameters": [
+          {
+            "name": "page_number",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationFilter"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationFilter"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationFilter"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationDtoPagedListApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationDtoPagedListApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationDtoPagedListApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Authorizations"
+        ],
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationAddPayloadDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationAddPayloadDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthorizationAddPayloadDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationResponseListApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationResponseListApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthorizationResponseListApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/visits": {
+      "post": {
+        "tags": [
+          "Visits"
+        ],
+        "summary": "Create a visit",
+        "description": "Sample Request\r\n\r\n    POST /visits\r\n    {\r\n        \"vendor_transaction_id\": \"10011\",\r\n        \"visit_list\": [\r\n            {\r\n                \"vendor_visit_id\": \"2771\",\r\n                \"kt_member_id\": \"612773c4cf460cd4a66120e7\",\r\n                \"kt_attendant_id\": \"612c4301783973ad97024d84\",\r\n                \"kt_auth_id\": \"612c5ba9634595f272a35a13\",\r\n                \"kt_contract_id\": \"611e0ea5e15d714e1ff8e5ce\",\r\n                \"kt_rate_id\": \"612620fb98052451d816e8ce\",\r\n                \"visit_date\": \"2021-08-19T09:42:48.333Z\",\r\n                \"schedule_time_in\": \"2021-08-19T09:42:48.333Z\",\r\n                \"schedule_time_out\": \"2021-08-19T09:42:48.333Z\",\r\n                \"place_of_service\": \"Home\",\r\n                \"status\": \"Active\"\r\n            }\r\n        ]\r\n    }",
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VisitListDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VisitListDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VisitListDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Visit Imported Successfully.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VisitResponsesDtoListApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VisitResponsesDtoListApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VisitResponsesDtoListApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Returns Internal error."
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Visits"
+        ],
+        "summary": "Update a visits",
+        "description": "Sample Request\r\n\r\n    PUT /visits\r\n    {\r\n        \"vendor_transaction_id\": \"10011\",\r\n        \"visit_list\": [\r\n            {\r\n                \"kt_visit_id\": \"611e6539c012a0f8fefd47ff\",\r\n                \"vendor_visit_id\": \"2771\",\r\n                \"kt_member_id\": \"612773c4cf460cd4a66120e7\",\r\n                \"kt_attendant_id\": \"612c4301783973ad97024d84\",\r\n                \"kt_auth_id\": \"612c5ba9634595f272a35a13\",\r\n                \"kt_contract_id\": \"611e0ea5e15d714e1ff8e5ce\",\r\n                \"kt_rate_id\": \"612620fb98052451d816e8ce\",\r\n                \"visit_date\": \"2021-08-19T09:42:48.333Z\",\r\n                \"schedule_time_in\": \"2021-08-19T09:40:48.333Z\",\r\n                \"schedule_time_out\": \"2021-08-19T12:40:48.333Z\",\r\n                \"place_of_service\": \"Hospital\",\r\n                \"status\": \"Active\"\r\n            }\r\n        ]\r\n    }",
+        "parameters": [
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VisitListDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VisitListDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VisitListDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Visit Updated Successfully.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VisitResponsesDtoIEnumerableApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VisitResponsesDtoIEnumerableApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VisitResponsesDtoIEnumerableApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Returns Internal error."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Visits"
+        ],
+        "summary": "Get visit Filter",
+        "parameters": [
+          {
+            "name": "page_number",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VisitFilterDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VisitFilterDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/VisitFilterDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVisitDtoPagedList"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVisitDtoPagedList"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVisitDtoPagedList"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/visits/{kt_visit_id}": {
+      "put": {
+        "tags": [
+          "Visits"
+        ],
+        "summary": "Update a visit",
+        "description": "Sample Request\r\n\r\n    PUT /visit\r\n    {\r\n        \"vendor_transaction_id\": \"10011\",\r\n        \"visitDto\": {\r\n                \"kt_visit_id\": \"611e6539c012a0f8fefd47ff\",\r\n                \"vendor_visit_id\": \"2771\",\r\n                \"kt_member_id\": \"612773c4cf460cd4a66120e7\",\r\n                \"kt_attendant_id\": \"612c4301783973ad97024d84\",\r\n                \"kt_auth_id\": \"612c5ba9634595f272a35a13\",\r\n                \"kt_contract_id\": \"611e0ea5e15d714e1ff8e5ce\",\r\n                \"kt_rate_id\": \"612620fb98052451d816e8ce\",\r\n                \"visit_date\": \"2021-08-19T09:42:48.333Z\",\r\n                \"schedule_time_in\": \"2021-08-19T09:40:48.333Z\",\r\n                \"schedule_time_out\": \"2021-08-19T12:40:48.333Z\",\r\n                \"place_of_service\": \"Hospital\",\r\n                \"status\": \"Active\"\r\n            }\r\n    }",
+        "parameters": [
+          {
+            "name": "kt_visit_id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "",
+              "nullable": true
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateVisitDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateVisitDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateVisitDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Visit Updated Successfully.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VisitResponsesDtoApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VisitResponsesDtoApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VisitResponsesDtoApiResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Returns Internal error."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Visits"
+        ],
+        "summary": "Delete a Visit",
+        "parameters": [
+          {
+            "name": "kt_visit_id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "",
+              "nullable": true
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Visit Deleted Successfully.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/VisitResponsesDtoApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VisitResponsesDtoApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VisitResponsesDtoApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Visits"
+        ],
+        "summary": "Get Visits by Id",
+        "parameters": [
+          {
+            "name": "kt_visit_id",
+            "in": "path",
+            "description": "61273bb88a4d4226c2b55581",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "61273bb88a4d4226c2b55581",
+              "nullable": true
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sample Response\r\n\r\n    GET /visit\r\n    {\r\n    \"response_payload\": {\r\n        \"checkin_info\": null,\r\n        \"checkout_info\": null,\r\n        \"evv_hours\": null,\r\n        \"edited_hours\": null,\r\n        \"non_billable\": \"false\",\r\n        \"non_payable\": null,\r\n        \"kt_visit_id\": \"61273bb88a4d4226c2b55581\",\r\n        \"vendor_visit_id\": \"2771\",\r\n        \"kt_member_id\": \"611e2390a43d5cedf2535b54\",\r\n        \"kt_attendant_id\": \"611e1b63083236281b1adcef\",\r\n        \"kt_auth_id\": \"610a85999d648fee588f83f2\",\r\n        \"kt_contract_id\": \"611e0ea5e15d714e1ff8e5ce\",\r\n        \"kt_rate_id\": \"611df8ed6d1653f1af2fc2d9\",\r\n        \"visit_date\": \"2021-08-19T09:42:48.333Z\",\r\n        \"schedule_time_in\": \"2021-08-19T09:42:48.333Z\",\r\n        \"schedule_time_out\": \"2021-08-19T09:42:48.333Z\",\r\n        \"place_of_service\": \"Home\",\r\n        \"status\": \"Active\"\r\n        },\r\n        \"is_error\": false,\r\n        \"error_code\": 200,\r\n        \"error_message\": \"Success\",\r\n        \"kt_transaction_id\": \"612df3e9dc10998857a46ed8\",\r\n        \"vendor_transaction_id\": \"10011\"\r\n       }",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVisitDtoApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVisitDtoApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVisitDtoApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/visits/updates/{vendorTransactionId}": {
+      "get": {
+        "tags": [
+          "Visits"
+        ],
+        "summary": "Get Latest Visit updates",
+        "parameters": [
+          {
+            "name": "page_number",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "vendorTransactionId",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "",
+              "nullable": true
+            }
+          },
+          {
+            "name": "X-API-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "APISecret",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Vendor_Transaction_ID",
+            "in": "header",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVisitDtoPagedList"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVisitDtoPagedList"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetVisitDtoPagedList"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Address": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "address1": {
+            "type": "string",
+            "nullable": true
+          },
+          "address2": {
+            "type": "string",
+            "nullable": true
+          },
+          "city": {
+            "type": "string",
+            "nullable": true
+          },
+          "state": {
+            "type": "string",
+            "nullable": true
+          },
+          "zip": {
+            "type": "string",
+            "enum": [
+              "imperial",
+              "standard"
+            ],
+            "nullable": true
+          },
+          "geo_location": {
+            "type": "string",
+            "nullable": true
+          },
+          "county": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "ClinicianPhone": {
+        "type": "object",
+        "properties": {
+          "clinician_phone1": {
+            "type": "string",
+            "nullable": true
+          },
+          "clinician_phone2": {
+            "type": "string",
+            "nullable": true
+          },
+          "clinician_phone3": {
+            "type": "string",
+            "nullable": true
+          },
+          "clinician_mobile": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CaregiverAddDto": {
+        "required": [
+          "attendant_evv_id",
+          "vendor_attendant_id"
+        ],
+        "type": "object",
+        "properties": {
+          "vendor_attendant_id": {
+            "type": "string"
+          },
+          "attendant_evv_id": {
+            "type": "string"
+          },
+          "attendant_last_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "attendant_first_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "attendant_middle_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "ssn": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "dob": {
+            "type": "string",
+            "format": "date"
+          },
+          "gender": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "official_email": {
+            "type": "string",
+            "nullable": true
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "termination_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "license_no": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "phone": {
+            "$ref": "#/components/schemas/ClinicianPhone"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CaregiverApiResponseDto": {
+        "type": "object",
+        "properties": {
+          "is_valid": {
+            "type": "boolean"
+          },
+          "status_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_messages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "kt_attendant_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_attendant_id": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CaregiverApiResponseDtoIEnumerableApiBatchResponse": {
+        "type": "object",
+        "properties": {
+          "is_valid": {
+            "type": "boolean"
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "status_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "response_payload": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CaregiverApiResponseDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CaregiverFilterDto": {
+        "type": "object",
+        "properties": {
+          "vendor_attendant_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_attendant_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CaregiverGetDto": {
+        "required": [
+          "attendant_evv_id",
+          "vendor_attendant_id"
+        ],
+        "type": "object",
+        "properties": {
+          "kt_attendant_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_attendant_id": {
+            "type": "string"
+          },
+          "attendant_evv_id": {
+            "type": "string"
+          },
+          "attendant_last_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "attendant_first_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "attendant_middle_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "ssn": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "dob": {
+            "type": "string",
+            "format": "date"
+          },
+          "gender": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "official_email": {
+            "type": "string",
+            "nullable": true
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "termination_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "license_no": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "phone": {
+            "$ref": "#/components/schemas/ClinicianPhone"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CaregiverGetDtoPagedList": {
+        "type": "object",
+        "properties": {
+          "totalItems": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPreviousPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNextPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "nextPageNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "previousPageNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CaregiverGetDto"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CaregiverGetDtoPagedListApiSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "is_valid": {
+            "type": "boolean"
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "status_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "response_payload": {
+            "$ref": "#/components/schemas/CaregiverGetDtoPagedList"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CaregiverEditDto": {
+        "required": [
+          "attendant_evv_id",
+          "vendor_attendant_id"
+        ],
+        "type": "object",
+        "properties": {
+          "vendor_attendant_id": {
+            "type": "string"
+          },
+          "attendant_evv_id": {
+            "type": "string"
+          },
+          "attendant_last_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "attendant_first_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "attendant_middle_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "ssn": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "dob": {
+            "type": "string",
+            "format": "date"
+          },
+          "gender": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "official_email": {
+            "type": "string",
+            "nullable": true
+          },
+          "start_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "end_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "termination_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "license_no": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "phone": {
+            "$ref": "#/components/schemas/ClinicianPhone"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "is_valid": {
+            "type": "boolean"
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "status_code": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CaregiverGetDtoApiSuccessResponse": {
+        "type": "object",
+        "properties": {
+          "is_valid": {
+            "type": "boolean"
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "status_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "response_payload": {
+            "$ref": "#/components/schemas/CaregiverGetDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthorizationDto": {
+        "type": "object",
+        "properties": {
+          "kt_authorization_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_authorization_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_member_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_contract_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_rate_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_attendant_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "authorization_no": {
+            "type": "string",
+            "nullable": true
+          },
+          "auth_from_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "auth_to_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "auth_status": {
+            "type": "string",
+            "nullable": true
+          },
+          "auth_weekly_units": {
+            "type": "string",
+            "nullable": true
+          },
+          "auth_total_units": {
+            "type": "string",
+            "nullable": true
+          },
+          "auth_total_visits": {
+            "type": "string",
+            "nullable": true
+          },
+          "auth_total_hours": {
+            "type": "string",
+            "nullable": true
+          },
+          "auth_limit_week_hours": {
+            "type": "string",
+            "nullable": true
+          },
+          "auth_remaining_units": {
+            "type": "string",
+            "nullable": true
+          },
+          "auth_remaining_visits": {
+            "type": "string",
+            "nullable": true
+          },
+          "auth_remaining_hours": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthorizationDtoApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_payload": {
+            "$ref": "#/components/schemas/AuthorizationDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthorizationEditDto": {
+        "required": [
+          "auth_status",
+          "authorization_no",
+          "kt_authorization_id",
+          "kt_contract_id",
+          "kt_member_id",
+          "vendor_authorization_id"
+        ],
+        "type": "object",
+        "properties": {
+          "kt_authorization_id": {
+            "type": "string"
+          },
+          "vendor_authorization_id": {
+            "type": "string"
+          },
+          "kt_member_id": {
+            "maxLength": 25,
+            "type": "string"
+          },
+          "kt_contract_id": {
+            "maxLength": 25,
+            "type": "string"
+          },
+          "kt_rate_id": {
+            "maxLength": 25,
+            "type": "string",
+            "nullable": true
+          },
+          "kt_attendant_id": {
+            "maxLength": 25,
+            "type": "string",
+            "nullable": true
+          },
+          "authorization_no": {
+            "type": "string"
+          },
+          "auth_from_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "auth_to_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "auth_status": {
+            "type": "string"
+          },
+          "auth_weekly_units": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "auth_total_units": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthorizationEditListDto": {
+        "required": [
+          "vendor_transaction_id"
+        ],
+        "type": "object",
+        "properties": {
+          "vendor_transaction_id": {
+            "type": "string"
+          },
+          "authorization_list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuthorizationEditDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthorizationFilter": {
+        "type": "object",
+        "properties": {
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_authorization_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_authorization_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_member_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "auth_number": {
+            "type": "string",
+            "nullable": true
+          },
+          "auth_from_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "auth_to_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "auth_status": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthorizationDtoPagedList": {
+        "type": "object",
+        "properties": {
+          "totalItems": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPreviousPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNextPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "nextPageNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "previousPageNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuthorizationDto"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthorizationDtoPagedListApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_payload": {
+            "$ref": "#/components/schemas/AuthorizationDtoPagedList"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthorizationAddDto": {
+        "required": [
+          "auth_status",
+          "authorization_no",
+          "kt_contract_id",
+          "kt_member_id",
+          "vendor_authorization_id"
+        ],
+        "type": "object",
+        "properties": {
+          "vendor_authorization_id": {
+            "type": "string"
+          },
+          "kt_member_id": {
+            "maxLength": 25,
+            "type": "string"
+          },
+          "kt_contract_id": {
+            "maxLength": 25,
+            "type": "string"
+          },
+          "kt_rate_id": {
+            "maxLength": 25,
+            "type": "string",
+            "nullable": true
+          },
+          "kt_attendant_id": {
+            "maxLength": 25,
+            "type": "string",
+            "nullable": true
+          },
+          "authorization_no": {
+            "type": "string"
+          },
+          "auth_from_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "auth_to_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "auth_status": {
+            "type": "string"
+          },
+          "auth_weekly_units": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "auth_total_units": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthorizationAddPayloadDto": {
+        "required": [
+          "vendor_transaction_id"
+        ],
+        "type": "object",
+        "properties": {
+          "vendor_transaction_id": {
+            "type": "string"
+          },
+          "authorization_list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuthorizationAddDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthorizationResponse": {
+        "type": "object",
+        "properties": {
+          "kt_authorization_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_authorization_id": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "AuthorizationResponseListApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_payload": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuthorizationResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContractResponse": {
+        "type": "object",
+        "properties": {
+          "kt_contract_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_contract_id": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContractResponseApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_payload": {
+            "$ref": "#/components/schemas/ContractResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContractDto": {
+        "type": "object",
+        "properties": {
+          "kt_contract_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_contract_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "contract_number": {
+            "type": "string",
+            "nullable": true
+          },
+          "contract_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "payer_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "tin": {
+            "type": "string",
+            "nullable": true
+          },
+          "npi": {
+            "type": "string",
+            "nullable": true
+          },
+          "api": {
+            "type": "string",
+            "nullable": true
+          },
+          "tpi": {
+            "type": "string",
+            "nullable": true
+          },
+          "taxonomy": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContractsDto": {
+        "required": [
+          "vendor_transaction_id"
+        ],
+        "type": "object",
+        "properties": {
+          "vendor_transaction_id": {
+            "type": "string"
+          },
+          "contract_dto": {
+            "$ref": "#/components/schemas/ContractDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CaregiverResponseDto": {
+        "type": "object",
+        "properties": {
+          "isValid": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_messages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "kt_attendant_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_attendant_id": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CaregiverResponseDtoApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_payload": {
+            "$ref": "#/components/schemas/CaregiverResponseDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContractFilter": {
+        "required": [
+          "vendor_transaction_id"
+        ],
+        "type": "object",
+        "properties": {
+          "vendor_transaction_id": {
+            "type": "string"
+          },
+          "kt_contract_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_contract_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContractResponsePagedList": {
+        "type": "object",
+        "properties": {
+          "totalItems": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPreviousPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNextPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "nextPageNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "previousPageNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContractResponse"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContractResponsePagedListApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_payload": {
+            "$ref": "#/components/schemas/ContractResponsePagedList"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContractListDto": {
+        "required": [
+          "vendor_transaction_id"
+        ],
+        "type": "object",
+        "properties": {
+          "vendor_transaction_id": {
+            "type": "string"
+          },
+          "contractlist_dto": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContractDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ContractResponseIEnumerableApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_payload": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ContractResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ClientPhone": {
+        "required": [
+          "contact_phone1"
+        ],
+        "type": "object",
+        "properties": {
+          "phone_No": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone_Type": {
+            "type": "string",
+            "nullable": true
+          },
+          "evv_phone3": {
+            "type": "string",
+            "nullable": true
+          },
+          "contact_phone1": {
+            "maxLength": 16,
+            "type": "string"
+          },
+          "contact_phone2": {
+            "type": "string",
+            "nullable": true
+          },
+          "contact_phone3": {
+            "type": "string",
+            "nullable": true
+          },
+          "home_phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "mobile": {
+            "type": "string",
+            "nullable": true
+          },
+          "evv_phone1": {
+            "type": "string",
+            "nullable": true
+          },
+          "evv_phone2": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MemberAddDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "description": "This defines the identification of the Vendor.",
+        "properties": {
+          "vendor_member_id": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "This defines the member identification of the EVV system."
+          },
+          "member_evv_id": {
+            "maxLength": 25,
+            "type": "string",
+            "description": "Define the first name of the member. This should be less than 25 characters."
+          },
+          "first_name": {
+            "maxLength": 50,
+            "type": "string",
+            "description": "Define the first name of the member. This should be less than or equal to 50 characters."
+          },
+          "last_name": {
+            "maxLength": 50,
+            "type": "string",
+            "description": "Define the last name of the member. This should be less than or equal to 50 characters."
+          },
+          "middle_initial": {
+            "maxLength": 5,
+            "type": "string",
+            "description": "Define the first name of the member. This should be less than or equal to 5 characters and this is optional.",
+            "nullable": true
+          },
+          "medicaid_no": {
+            "maxLength": 50,
+            "type": "string",
+            "description": "Define insurance number for managed care payer."
+          },
+          "medicare_no": {
+            "maxLength": 50,
+            "type": "string",
+            "description": "Define insurance number for medicare payer."
+          },
+          "ssn": {
+            "maxLength": 50,
+            "type": "string",
+            "description": "Define Social Security number"
+          },
+          "status": {
+            "maxLength": 20,
+            "type": "string",
+            "description": "Used to define status of the member (Active/Inactive)\n"
+          },
+          "dob": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "soc_date": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "gender": {
+            "maxLength": 6,
+            "type": "string"
+          },
+          "posess_fob_device": {
+            "type": "boolean"
+          },
+          "phone": {
+            "$ref": "#/components/schemas/ClientPhone"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          }
+        },
+        "required": [
+          "vendor_member_id",
+          "member_evv_id",
+          "first_name",
+          "last_name",
+          "medicaid_no",
+          "medicare_no",
+          "ssn",
+          "status",
+          "gender"
+        ]
+      },
+      "MemberResponseDto": {
+        "type": "object",
+        "properties": {
+          "is_valid": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_messages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "kt_member_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_member_id": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MemberResponseDtoIEnumerableApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_payload": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MemberResponseDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MemberFilterDto": {
+        "type": "object",
+        "properties": {
+          "kt_member_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_member_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "medicaid_no": {
+            "type": "string",
+            "nullable": true
+          },
+          "soc_date": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "discharge_date": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MemberGetDto": {
+        "type": "object",
+        "properties": {
+          "kt_member_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_member_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "member_evv_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "first_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "last_name": {
+            "type": "string",
+            "nullable": true
+          },
+          "middle_initial": {
+            "type": "string",
+            "nullable": true
+          },
+          "medicaid_no": {
+            "type": "string",
+            "nullable": true
+          },
+          "medicare_no": {
+            "type": "string",
+            "nullable": true
+          },
+          "ssn": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "dob": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "soc_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "gender": {
+            "type": "string",
+            "nullable": true
+          },
+          "posess_fob_device": {
+            "type": "boolean"
+          },
+          "phone": {
+            "$ref": "#/components/schemas/ClientPhone"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MemberGetDtoPagedList": {
+        "type": "object",
+        "properties": {
+          "totalItems": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPreviousPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNextPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "nextPageNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "previousPageNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MemberGetDto"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MemberGetDtoPagedListApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_payload": {
+            "$ref": "#/components/schemas/MemberGetDtoPagedList"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MemberGetDtoApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_payload": {
+            "$ref": "#/components/schemas/MemberGetDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MemberEditDto": {
+        "required": [
+          "first_name",
+          "gender",
+          "last_name",
+          "medicaid_no",
+          "medicare_no",
+          "member_evv_id",
+          "ssn",
+          "status",
+          "vendor_member_id"
+        ],
+        "type": "object",
+        "properties": {
+          "vendor_member_id": {
+            "maxLength": 25,
+            "type": "string"
+          },
+          "member_evv_id": {
+            "maxLength": 25,
+            "type": "string"
+          },
+          "first_name": {
+            "maxLength": 50,
+            "type": "string"
+          },
+          "last_name": {
+            "maxLength": 50,
+            "type": "string"
+          },
+          "middle_initial": {
+            "maxLength": 5,
+            "type": "string",
+            "nullable": true
+          },
+          "medicaid_no": {
+            "maxLength": 50,
+            "type": "string"
+          },
+          "medicare_no": {
+            "maxLength": 50,
+            "type": "string"
+          },
+          "ssn": {
+            "maxLength": 50,
+            "type": "string"
+          },
+          "status": {
+            "maxLength": 20,
+            "type": "string"
+          },
+          "dob": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "soc_date": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "discharge_date": {
+            "type": "string",
+            "format": "date"
+          },
+          "gender": {
+            "maxLength": 6,
+            "type": "string"
+          },
+          "posess_fob_device": {
+            "type": "boolean"
+          },
+          "phone": {
+            "$ref": "#/components/schemas/ClientPhone"
+          },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          }
+        },
+        "additionalProperties": false
+      },
+      "MemberResponseDtoApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_payload": {
+            "$ref": "#/components/schemas/MemberResponseDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Modifier": {
+        "required": [
+          "modifier1"
+        ],
+        "type": "object",
+        "properties": {
+          "modifier1": {
+            "maxLength": 25,
+            "type": "string"
+          },
+          "modifier2": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifier3": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifier4": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RateDto": {
+        "required": [
+          "hcpcs",
+          "kt_contract_id",
+          "payroll_id",
+          "rate",
+          "rate_name",
+          "status",
+          "vendor_rate_id"
+        ],
+        "type": "object",
+        "properties": {
+          "kt_rate_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_rate_id": {
+            "maxLength": 25,
+            "type": "string"
+          },
+          "kt_contract_id": {
+            "maxLength": 25,
+            "type": "string"
+          },
+          "rate_name": {
+            "maxLength": 50,
+            "type": "string"
+          },
+          "rate": {
+            "maxLength": 25,
+            "type": "string"
+          },
+          "effective_from": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "hcpcs": {
+            "maxLength": 50,
+            "type": "string"
+          },
+          "modifiers": {
+            "$ref": "#/components/schemas/Modifier"
+          },
+          "status": {
+            "maxLength": 20,
+            "type": "string"
+          },
+          "payroll_id": {
+            "maxLength": 25,
+            "type": "string"
+          },
+          "bill_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "qualifier": {
+            "type": "string",
+            "nullable": true
+          },
+          "rate_code": {
+            "type": "string",
+            "nullable": true
+          },
+          "fixed_unit": {
+            "type": "string",
+            "nullable": true
+          },
+          "hourly_unit": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RateListDto": {
+        "required": [
+          "vendor_transaction_id"
+        ],
+        "type": "object",
+        "properties": {
+          "vendor_transaction_id": {
+            "type": "string"
+          },
+          "rate_list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RateDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RateResponse": {
+        "type": "object",
+        "properties": {
+          "kt_rate_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_rate_id": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RateResponseIEnumerableApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_payload": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RateResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RateFilter": {
+        "required": [
+          "vendor_transaction_id"
+        ],
+        "type": "object",
+        "properties": {
+          "vendor_transaction_id": {
+            "type": "string"
+          },
+          "kt_rates_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_rate_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "effective_from": {
+            "type": "string",
+            "format": "date",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RateDtoPagedList": {
+        "type": "object",
+        "properties": {
+          "totalItems": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPreviousPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNextPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "nextPageNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "previousPageNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RateDto"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "RateDtoPagedListApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_payload": {
+            "$ref": "#/components/schemas/RateDtoPagedList"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RateDtoApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_payload": {
+            "$ref": "#/components/schemas/RateDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RatesDto": {
+        "required": [
+          "vendor_transaction_id"
+        ],
+        "type": "object",
+        "properties": {
+          "vendor_transaction_id": {
+            "type": "string"
+          },
+          "rate_dto": {
+            "$ref": "#/components/schemas/RateDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "RateResponseApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_payload": {
+            "$ref": "#/components/schemas/RateResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "VisitsDto": {
+        "type": "object",
+        "properties": {
+          "kt_visit_id": {
+            "maxLength": 25,
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_visit_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_member_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_attendant_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_auth_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_contract_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_rate_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "visit_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "schedule_time_in": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "schedule_time_out": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "place_of_service": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "VisitListDto": {
+        "required": [
+          "vendor_transaction_id"
+        ],
+        "type": "object",
+        "properties": {
+          "vendor_transaction_id": {
+            "type": "string"
+          },
+          "visit_list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VisitsDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "VisitResponsesDto": {
+        "type": "object",
+        "properties": {
+          "kt_visit_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_visit_id": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "VisitResponsesDtoListApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_payload": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VisitResponsesDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "VisitResponsesDtoIEnumerableApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_payload": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VisitResponsesDto"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "VisitFilterDto": {
+        "type": "object",
+        "properties": {
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_visit_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_visit_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_member_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_attendant_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_auth_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_contract_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_rate_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "visit_date_from": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "visit_date_to": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "place_of_service": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CheckinDetailsDto": {
+        "type": "object",
+        "properties": {
+          "evv_TimeIn": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "checkin_Method": {
+            "type": "string",
+            "nullable": true
+          },
+          "checkin_GeoLocation": {
+            "type": "string",
+            "nullable": true
+          },
+          "edited_Timein": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetVisitDto": {
+        "type": "object",
+        "properties": {
+          "kt_visit_id": {
+            "maxLength": 25,
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_visit_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_member_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_attendant_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_auth_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_contract_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_rate_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "visit_date": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "schedule_time_in": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "schedule_time_out": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "place_of_service": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "checkin_info": {
+            "$ref": "#/components/schemas/CheckinDetailsDto"
+          },
+          "checkout_info": {
+            "$ref": "#/components/schemas/CheckinDetailsDto"
+          },
+          "evv_hours": {
+            "type": "string",
+            "nullable": true
+          },
+          "edited_hours": {
+            "type": "string",
+            "nullable": true
+          },
+          "non_billable": {
+            "type": "string",
+            "nullable": true
+          },
+          "non_payable": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetVisitDtoPagedList": {
+        "type": "object",
+        "properties": {
+          "totalItems": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPreviousPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNextPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "nextPageNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "previousPageNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "list": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GetVisitDto"
+            },
+            "nullable": true,
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateVisitDto": {
+        "required": [
+          "vendor_transaction_id"
+        ],
+        "type": "object",
+        "properties": {
+          "vendor_transaction_id": {
+            "type": "string"
+          },
+          "visitDto": {
+            "$ref": "#/components/schemas/VisitsDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "VisitResponsesDtoApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_payload": {
+            "$ref": "#/components/schemas/VisitResponsesDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "GetVisitDtoApiResponse": {
+        "type": "object",
+        "properties": {
+          "is_error": {
+            "type": "boolean"
+          },
+          "error_code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "error_message": {
+            "type": "string",
+            "nullable": true
+          },
+          "kt_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "vendor_transaction_id": {
+            "type": "string",
+            "nullable": true
+          },
+          "response_payload": {
+            "$ref": "#/components/schemas/GetVisitDto"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "API Key - 1": {
+        "name": "API Key",
+        "type": "apiKey",
+        "in": "query"
+      }
+    }
+  }
+}
